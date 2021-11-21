@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/learn-terraform-provision-eks-cluster" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/terraform" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/terraform-aws-eks" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/terraform/crypto-eks-cluster" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/terraform/learn-terraform-provision-eks-cluster" vcs="Git" />
+  </component>
+</project>

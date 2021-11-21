@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: crypto-currency-api
+  name: crypto-currency-api
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: crypto-currency-api
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: crypto-currency-api
+    spec:
+      containers:
+      - image: 601907634327.dkr.ecr.us-east-1.amazonaws.com/crypto-currency-api:latest
+        name: crypto-currency-api
+        resources: {}
+status: {}
