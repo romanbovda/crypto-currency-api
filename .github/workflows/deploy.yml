@@ -39,6 +39,7 @@ jobs:
       env:
         KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
       with:
+        release: api
         namespace: default
         chart: crypto-currency-api
         token: ${{ github.token }}
