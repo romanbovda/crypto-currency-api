@@ -1,9 +1,8 @@
 name: Build and Deploy
 on:
   push:
-    branches:
-      - main
-
+    tags:
+      - "v*"
 jobs:
   build-and-push-to-ecr:
     name: Build image
@@ -31,15 +30,44 @@ jobs:
         echo $REGISTRY
         echo $REPOSITORY
         echo $IMAGE_TAG
-        docker build -t $REGISTRY.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY:$IMAGE_TAG \
-        -t $REGISTRY.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY:latest .
-        docker push $AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY:$IMAGE_TAG
+        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG \
+        -t $REGISTRY/$REPOSITORY:latest .
+        docker push $REGISTRY/$REPOSITORY --all-tags
 
     - name: Deploy Helm Chart
-      uses: deliverybot/helm@v1
+      uses: koslib/helm-eks-action@master
       env:
-        KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        namespace: default
-        chart: crypto-currency-api
-        token: ${{ github.token }}
+        command:  helm upgrade crypto-currency-api helm-charts/.
+
+    - name: Get URL
+      id: url
+      uses: koslib/helm-eks-action@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        command: kubectl get svc crypto-currency-api -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
+
+    - name: Print Response
+      run: echo "Response was ${{ steps.url.outputs.response }}"
+
+    - name: Notify slack success
+      if: success()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: crypto-alerts
+        status: SUCCESS
+        color: good
+
+    - name: Notify slack fail
+      if: failure()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: crypto-alerts
+        status: FAILED
+        color: danger

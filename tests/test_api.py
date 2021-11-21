@@ -27,5 +27,3 @@ def test_invalid_currency():
     response = app.test_client().get('/currency/invalid')
     assert response.status_code == 404
 
-
-test_healthcheck()
