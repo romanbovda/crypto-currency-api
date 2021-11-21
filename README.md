@@ -79,11 +79,19 @@ metrics-server   1/1     1            1           4s
 
 ### Slack notifications
 
-Test and deploy actions serviced by Mr. Bender - SRE helper bot
+Test and deploy actions served by Mr. Bender - SRE helper bot
 ![img.png](img.png)
 
 Get endpoint name:
 
 ```commandline
 kubectl get svc crypto-currency-api -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
+
+ad8a6f27128824f538fa4c35b6e57444-2138826783.us-east-1.elb.amazonaws.com
 ```
+
+Encode kube config
+
+```cat $HOME/.kube/config | base64```
+
+
