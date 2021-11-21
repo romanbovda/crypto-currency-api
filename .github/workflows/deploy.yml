@@ -39,7 +39,18 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        command: helm upgrade crypto-currency-api .
+        command:  helm upgrade crypto-currency-api helm-charts/.
+
+      - name: Get URL
+        id: url
+        uses: koslib/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          command: kubectl get svc my_svc -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
+
+      - name: Print Response
+        run: echo "Response was ${{ steps.url.outputs.response }}"
 
 #    - name: Deploy Helm Chart
 #      uses: deliverybot/helm@v1
