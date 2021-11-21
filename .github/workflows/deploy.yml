@@ -52,12 +52,22 @@ jobs:
     - name: Print Response
       run: echo "Response was ${{ steps.url.outputs.response }}"
 
-#    - name: Deploy Helm Chart
-#      uses: deliverybot/helm@v1
-#      env:
-#        KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
-#      with:
-#        release: api
-#        namespace: default
-#        chart: crypto-currency-api
-#        token: ${{ github.token }}
+    - name: Notify slack success
+      if: success()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_WEBHOOK }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: crypto-alerts
+        status: SUCCESS
+        color: good
+
+    - name: Notify slack fail
+      if: failure()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_WEBHOOK }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: crypto-alerts
+        status: FAILED
+        color: danger
