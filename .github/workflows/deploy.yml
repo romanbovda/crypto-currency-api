@@ -34,8 +34,8 @@ jobs:
         -t $REGISTRY/$REPOSITORY:latest .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-    - name: Deploy Helm Chart
-      uses: peymanmortazavi/eks-helm-deploy@v1
+    - name: EKS Helm Deploy
+      uses: peymanmortazavi/eks-helm-deploy@v2.1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS__KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
