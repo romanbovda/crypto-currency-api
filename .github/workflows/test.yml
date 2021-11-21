@@ -10,8 +10,6 @@ on:
 #      - "feature*"
 jobs:
   build:
-    if: contains(github.event.pull_request.labels.*.name, 'test')
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
