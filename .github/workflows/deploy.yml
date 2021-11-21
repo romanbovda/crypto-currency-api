@@ -4,8 +4,8 @@ on:
     branches:
       - "*"
 jobs:
-  build-and-push-to-ecr:
-    name: Build image
+  build-and-deploy:
+    name: Deploy API service
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -34,10 +34,6 @@ jobs:
         -t $REGISTRY/$REPOSITORY:latest .
         docker push $REGISTRY/$REPOSITORY --all-tags
 
-  helm-chart-deploy:
-    name: Helm deploy
-    runs-on: ubuntu-latest
-    steps:
     - name: Deploy Helm Chart
       uses: koslib/helm-eks-action@master
       env:
@@ -56,10 +52,6 @@ jobs:
     - name: Print Response
       run: echo "Response was ${{ steps.url.outputs.response }}"
 
-  slack-notifications:
-    name: Slack notifications
-    runs-on: ubuntu-latest
-    steps:
     - name: Notify slack success
       if: success()
       env:
