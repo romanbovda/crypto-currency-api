@@ -2,10 +2,15 @@ name: Test Python app
 
 on:
   pull_request:
-    branches:
-      - main2
+    types: [ labeled ]
+
+#  push:
+#    branches:
+#      - "dev*"
+#      - "feature*"
 jobs:
   build:
+    if: contains(github.event.pull_request.labels.*.name, 'test')
 
     runs-on: ubuntu-latest
     strategy:
@@ -41,3 +46,23 @@ jobs:
           path: junit/test-results-${{ matrix.python-version }}.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
+
+      - name: Notify slack success
+        if: success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: crypto-alerts
+          status: SUCCESS
+          color: good
+
+      - name: Notify slack fail
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: crypto-alerts
+          status: FAILED
+          color: danger
