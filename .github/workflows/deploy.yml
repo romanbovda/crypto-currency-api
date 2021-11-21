@@ -1,8 +1,8 @@
 name: Build and Deploy
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
 jobs:
   build-and-push-to-ecr:
