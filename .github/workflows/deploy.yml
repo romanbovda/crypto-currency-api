@@ -4,8 +4,8 @@ on:
     tags:
       - "v*"
 jobs:
-  build-and-push-to-ecr:
-    name: Build image
+  build-and-deploy:
+    name: Deploy API service
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
