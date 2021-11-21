@@ -35,11 +35,22 @@ jobs:
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
     - name: Deploy Helm Chart
-      uses: deliverybot/helm@v1
-      env:
-        KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
+      uses: peymanmortazavi/eks-helm-deploy@v1
       with:
-        release: api
+        aws-access-key-id: ${{ secrets.AWS_ACCESS__KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        cluster-name: crypot-eks-iPjZsA41
         namespace: default
-        chart: crypto-currency-api
-        token: ${{ github.token }}
+        name: crypto-currency-api
+        chart-path: helm-charts
+
+#    - name: Deploy Helm Chart
+#      uses: deliverybot/helm@v1
+#      env:
+#        KUBECONFIG_FILE: ${{ secrets.KUBECONFIG }}
+#      with:
+#        release: api
+#        namespace: default
+#        chart: crypto-currency-api
+#        token: ${{ github.token }}
