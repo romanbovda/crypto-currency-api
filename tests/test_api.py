@@ -20,7 +20,7 @@ def test_currency():
     response = app.test_client().get('/currency/UAH')
     data = json.loads(response.get_data(as_text=True))
     assert response.status_code == 200
-    assert data['data']['currency'] == "UAH1"
+    assert data['data']['currency'] == "UAH"
 
 
 def test_invalid_currency():
