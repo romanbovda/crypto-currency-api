@@ -47,7 +47,7 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        command: kubectl get svc my_svc -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
+        command: kubectl get svc crypto-currency-api -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
 
     - name: Print Response
       run: echo "Response was ${{ steps.url.outputs.response }}"

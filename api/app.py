@@ -12,6 +12,7 @@ def index():
     return jsonify({'Description': 'Demo Coinbase Cryptocurrency Simple API'})
 
 
+# get list of all supported currencies
 @app.route('/currency', methods=['GET'])
 def get_currency_list():
     currency_list = []
@@ -22,6 +23,7 @@ def get_currency_list():
     return jsonify({"supported currencies": currency_list})
 
 
+# Get price for a particular currency
 @app.route('/currency/<string:currency_id>', methods=['GET'])
 def get_currency(currency_id):
     if currency_id not in supported_currencies:
@@ -33,11 +35,13 @@ def get_currency(currency_id):
     return data
 
 
+# Health endpoint
 @app.route('/health', methods=['GET'])
 def get_app_state():
     return {"status": "I'm healthy and wealthy"}
 
 
+# Error handling function
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Invalid currency ID, please find the correct in  "/currency" endpoint'}), 404)
