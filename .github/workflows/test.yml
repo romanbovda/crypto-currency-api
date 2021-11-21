@@ -2,8 +2,8 @@ name: Test Python app
 
 on:
   pull_request:
-    types: [ labeled ]
-
+    branches:
+      - main
 #  push:
 #    branches:
 #      - "dev*"
