@@ -34,16 +34,12 @@ jobs:
         -t $REGISTRY/$REPOSITORY:latest .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-    - name: EKS Helm Deploy
-      uses: peymanmortazavi/eks-helm-deploy@v2.1
+    - name: Deploy Helm Chart
+      uses: koslib/helm-eks-action@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS__KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
-        cluster-name: crypot-eks-iPjZsA41
-        namespace: default
-        name: crypto-currency-api
-        chart-path: helm-charts
+        command: helm upgrade crypto-currency-api .
 
 #    - name: Deploy Helm Chart
 #      uses: deliverybot/helm@v1
