@@ -3,7 +3,7 @@ name: Test Python app
 on:
   pull_request:
     branches:
-      - main
+      - main2
 jobs:
   build:
 
