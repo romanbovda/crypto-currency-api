@@ -25,7 +25,7 @@ $ make test
 
 ## Infrastructure provisioning
 
-Use the package manager homebrew to install the AWS CLI.
+For MacOs, use the package manager homebrew to install the AWS CLI.
 ```commandline
 $ brew install awscli
 ```
@@ -85,7 +85,7 @@ Test and deploy actions served by Mr. Bender - SRE helper bot
 Get endpoint name:
 
 ```commandline
-kubectl get svc crypto-currency-api -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
+$ kubectl get svc crypto-currency-api -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
 
 ad8a6f27128824f538fa4c35b6e57444-2138826783.us-east-1.elb.amazonaws.com
 ```
