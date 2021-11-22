@@ -93,5 +93,3 @@ ad8a6f27128824f538fa4c35b6e57444-2138826783.us-east-1.elb.amazonaws.com
 Encode kube config
 
 ```cat $HOME/.kube/config | base64```
-
-
